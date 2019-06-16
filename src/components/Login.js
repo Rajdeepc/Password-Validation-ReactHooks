@@ -16,15 +16,17 @@ const LoginModal = styled.div`
     margin:0 auto;
     position:absolute;
     top:10%;
-    
     left:0;
     right:0
     z-index:9999;
-    padding: 2em
+    padding: 20px;
+    h2 {
+       margin: 10px 0px 20px;
+    }
 
 `
 const Label = styled.div`
-    font-size: 1.2em;
+    font-size: 14px;
     margin-bottom:6px;
 `
 const FormGroup = styled.div`
@@ -54,10 +56,10 @@ const ButtonGroup = styled.div`
 const Error = styled.div`
     background: #ffb2c5;
     padding: 1em;
-    font-size: 0.7em;
-    margin-top: 0.5em;
+    font-size: 12px;
+    margin-top: 12px;
     ul {
-        padding:0em 1.5em;
+        padding:0em 12px;
     }
 `
 
@@ -69,7 +71,6 @@ const LoginComponent = () => {
 
     const valueOfPassword = (e) => {
         setPassword(e.target.value);
-        console.log("password" + password)
     }
 
     const valueofName = (e) => {
@@ -95,6 +96,7 @@ const LoginComponent = () => {
     const validateForm = (event) => {
         event.preventDefault();
         if(name !== '' && passTOMatchConsecutiveStrings(password) === true && consecutiveLettersMethod(password) === true && lengthValidation(password) === true) {
+            /** sets the username to the current session */
             sessionStorage.setItem("username", name);
         } else {
             setShowError(true)
@@ -102,6 +104,7 @@ const LoginComponent = () => {
         }
     }
 
+    /** checks whether the username is already valid for this session or not */
     useEffect(() => {
         if(sessionStorage.getItem("username")) {
             setshowPopUp(false)
@@ -118,14 +121,14 @@ const LoginComponent = () => {
                         <FormGroup>
                             <Label>User Name</Label>
                             <InputGroup>
-                                <input type="text" onChange={valueofName}/>
+                                <input type="text" onChange={valueofName} required/>
                             </InputGroup>
                         </FormGroup>
 
                         <FormGroup>
                             <Label>Password</Label>
                             <InputGroup>
-                                <input type="password" onChange={valueOfPassword}/>
+                                <input type="password" onChange={valueOfPassword} required/>
                             </InputGroup>
                             { showError && <Error>
                                 <ul>
